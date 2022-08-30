@@ -1,6 +1,6 @@
 //SPDX-License-Idebntifier: UNLICENSED
 
-pragma solidity 0.8.4;
+pragma solidity ^0.8.4;
 
 contract BankApp {
   string name;
@@ -10,6 +10,7 @@ contract BankApp {
     string name;
     string kraPin;
     uint256 balance;
+    bool status;
   }
 
   mapping(address => Account) accounts;
@@ -38,18 +39,20 @@ contract BankApp {
     account.name = name;
     account.kraPin = kraPin;
     account.balance = balance;
-
     accounts[user] = account;
-
     return true;
   }
 
-  function login() public {
+  function login() public returns (bool) {
     address _user = msg.sender;
     Account memory account = accounts[_user];
-  }
 
-  function logged() public{
-    a
+// check if the user account exists if not revert with an error
+    if (account.id == 0) {
+      revert ("No account");
+    }
+   if (account.status){
+    return true;
+   }
   }
 }
