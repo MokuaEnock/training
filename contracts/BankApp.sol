@@ -1,44 +1,55 @@
+//SPDX-License-Idebntifier: UNLICENSED
+
 pragma solidity 0.8.4;
 
 contract BankApp {
+  string name;
+  address public manager;
+  struct Account {
+    uint256 id;
     string name;
-    address public manager;
-    struct Account {
-        uint256 id;
-        string name;
-        string kraPin;
-        uint256 balance;
+    string kraPin;
+    uint256 balance;
+  }
+
+  mapping(address => Account) accounts;
+
+  constructor(string memory _name) {
+    manager = msg.sender;
+    name = _name;
+  }
+
+  function register(
+    address user,
+    uint256 id,
+    string memory name,
+    string memory kraPin,
+    uint256 balance
+  ) public returns (bool) {
+    require(msg.sender == manager, "Send not manager");
+
+    Account memory account = accounts[user];
+    // check if the account is created
+    if (account.id != 0) {
+      revert("Account already exist");
     }
 
-    mapping(address => Account) accounts;
+    account.id = id;
+    account.name = name;
+    account.kraPin = kraPin;
+    account.balance = balance;
 
-    constructor(string memory _name) {
-        manager = msg.sender;
-        name = _name;
-    }
+    accounts[user] = account;
 
-    function register(
-        address user,
-        uint256 id,
-        string memory name,
-        string memory kraPin,
-        uint256 balance
-    ) public returns (bool) {
-        require(msg.sender == manager, "Send not manager");
+    return true;
+  }
 
-        Account memory account = accounts[user];
-        // check if the account is created
-        if (account.id != 0) {
-            revert("Account already exist");
-        }
+  function login() public {
+    address _user = msg.sender;
+    Account memory account = accounts[_user];
+  }
 
-        account.id = id;
-        account.name = name;
-        account.kraPin = kraPin;
-        account.balance = balance;
-
-        accounts[user] = account;
-
-        return true;
-    }
+  function logged() public{
+    a
+  }
 }
