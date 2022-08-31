@@ -47,12 +47,14 @@ contract BankApp {
     address _user = msg.sender;
     Account memory account = accounts[_user];
 
-// check if the user account exists if not revert with an error
+    // check if the user account exists if not revert with an error
     if (account.id == 0) {
-      revert ("No account");
+      revert("No account");
     }
-   if (account.status){
-    return true;
-   }
+    if (account.status) {
+      return true;
+    }
+
+    account.status = true;
   }
 }
